@@ -20,17 +20,12 @@ let miss_count = 0;
 let correct_count = 0;
 let quiz;
 let count = 0;
-
 //api設定の定義
 const url = "http://localhost:3000/qanda";
-const options = {
-  method: 'GET'
-};
-
-console.log(answers[0]);
 /*-------------------------
+startQuiz関数
 引数    url
-戻り値　body.results
+doQuiz関数へ
 -------------------------*/
 async function startQuiz(url){
   navi.textContent= "少々お待ちください。";
@@ -39,10 +34,9 @@ async function startQuiz(url){
   await fetch(url)
   .then(res =>res.json())
   .then(body => {
-    quiz = body.results;
-    console.log(body.results[0]);
+    quiz = body;
+    console.log(body[0]);
     doQuiz(quiz);
-    
   });
 };
 
@@ -55,11 +49,9 @@ function doQuiz(quiz){
     console.log(miss_count);
     endview(correct_count);
   }else{
-    //問題をシャッフル
-    quiz[count].incorrect_answers.push(quiz[count].correct_answer);
+  //選択肢を定義
     let correct_answer = quiz[count].correct_answer;
     let selectanswer = quiz[count].incorrect_answers;
-    selectanswer = shuffle(selectanswer);
     console.log(selectanswer);
     console.log(correct_answer);
   //タグ表示
@@ -74,7 +66,7 @@ function doQuiz(quiz){
       answers[i].style.display = appear;
       answers[i].value = selectanswer[i];
       if(correct_answer == selectanswer[i]){
-          answers[i].onclick = function (){correct_route(quiz);};
+        answers[i].onclick = function (){correct_route(quiz);};
       }else{
         answers[i].onclick = function (){miss_route(quiz);};
       }
@@ -104,13 +96,4 @@ function endview(count){
   for(let i = 0;i < answers.length; i++){
     answers[i].style.display = none;
   };
-
 };
-//シャッフル関数
-function shuffle([...array]){
-  for (let i = array.length - 1; i >= 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-}

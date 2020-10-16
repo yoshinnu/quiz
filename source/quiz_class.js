@@ -1,14 +1,20 @@
-const fetch = require("node-fetch");
 module.exports = 
 class Quiz {
-
-   getQuizbody(url){ 
-    return fetch(url)
-    .then( res => res.json());
+//シャッフル関数
+  answers_shuffle([...array]){
+    for (let i = array.length - 1; i >= 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
   };
-  async  getQuiz(url){
-     let body = await this.getQuizbody(url);
-      console.log("getquizcount:",body.results.length);
-      return body;
-    };
+//Quizbodyの成型
+  formatQuizbody(body){
+    let quiz = body.results;
+  for(let i = 0; i < quiz.length; i++){
+  quiz[i].incorrect_answers.push(quiz[i].correct_answer);
+  quiz[i].incorrect_answers = this.answers_shuffle(quiz[i].incorrect_answers);
+  }
+    return quiz;
+  };
 };
