@@ -12,8 +12,8 @@ class Quiz {
   formatQuizbody(body){
     let quiz = body.results;
   for(let i = 0; i < quiz.length; i++){
-  quiz[i].incorrect_answers.push(quiz[i].correct_answer);
-  quiz[i].incorrect_answers = this.answers_shuffle(quiz[i].incorrect_answers);
+    quiz[i].incorrect_answers.push(quiz[i].correct_answer);
+    quiz[i].incorrect_answers = this.answers_shuffle(quiz[i].incorrect_answers);
   }
     return quiz;
   };

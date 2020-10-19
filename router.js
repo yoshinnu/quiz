@@ -8,11 +8,6 @@ router.get("/", (req, res)=>{
 });
 //GET API
 router.get("/qanda", (req, res)=>{
-  quizcontrol(url).then((body)=>{
-    res.json(body);
-    }).catch((error) =>{
-      throw error;
-  });
+  quizcontrol(url,res)
 });
-
 module.exports = router;
