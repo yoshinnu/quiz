@@ -27,11 +27,11 @@ startQuiz関数
 引数    url
 doQuiz関数へ
 -------------------------*/
-async function startQuiz(url){
+function startQuiz(url){
   navi.textContent= "少々お待ちください。";
   title.textContent= "Now Loding......";
   start.style.display = none;
-  await fetch(url)
+  fetch(url)
   .then(res =>res.json())
   .then(body => {
     quiz = body;
